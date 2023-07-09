@@ -1,0 +1,96 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+#chakra-modal-mymodal {
+  height:700px;
+  /* There is a max-width rule used by chakra-ui,
+  thus you need to overwrite it to make it work. */
+  max-width:900px; 
+}
+
+#chakra-modal-modalCaption {
+  /* height:700px; */
+  /* There is a max-width rule used by chakra-ui,
+  thus you need to overwrite it to make it work. */
+  max-width:900px; 
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.InputLeft {
+  top: 3px !important;
+  left: 3px !important;
+}
+.Input {
+  padding-left: 24px !important;
+}
+
+div.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  background-color: green;
+  border: 2px solid #4CAF50;
+}
+
+.myimg{
+  width:375px;
+  height:375px;
+  /* object-fit:cover; */
+  /* object-fit: contain; */
+  overflow: hidden;
+}
+
+/* .crop {
+  height: 100vw;
+  width: 100vw;
+} */
+
+.crop{
+  width:375px;
+  height:375px;
+  overflow: hidden;
+}
+.crop img{
+  /* width: 100%; */
+  /* height: auto; */
+  position: relative;
+  top: 50%;
+  /* -webkit-transform: translateY(-50%); Ch <36, Saf 5.1+, iOS < 9.2, An =<4.4.4 */
+  /* -ms-transform: translateY(-50%); IE 9 */
+  transform: translateY(-50%); /* IE 10, Fx 16+, Op 12.1+ */
+}
