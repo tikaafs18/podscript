@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 // const PORT = process.env.PORT || 3232;
-const PORT = 3232;
+const PORT = process.env.PORT;
 const bearerToken = require('express-bearer-token');
 
 //Allowing API to grab data from web
