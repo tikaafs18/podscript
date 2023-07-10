@@ -7,7 +7,7 @@ import {
     MenuItem, Modal, ModalOverlay,
     ModalContent, ModalHeader, ModalFooter,
     ModalBody,
-    Image,
+    Image, useToast,
     AlertDialog,
     AlertDialogBody,
     AlertDialogFooter,
