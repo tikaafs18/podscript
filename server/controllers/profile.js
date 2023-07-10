@@ -38,9 +38,6 @@ module.exports = {
                                 if(err){
                                     console.log(error)
                                 }
-
-                                console.log('Ini reslt',reslt)
-
                                 
                                 res.status(200).send({
                                     success: true,
@@ -51,7 +48,6 @@ module.exports = {
                     }
                 })
         } catch (error) {
-            console.log('Fungsi editProfile gagal :', error);
             profilepic ?
                 fs.unlinkSync(`.public/imgProfPic/${req.files[0].filename}`)
                 : null;

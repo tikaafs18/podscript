@@ -29,7 +29,7 @@ module.exports = {
                 console.log("File masuk ke uploader edit format file")
                 let ext = file.originalname.split('.');
 
-                //filePrefix = inputan dari argumen di middleware UPLOADER
+                //filePrefix = input dari argumen di middleware UPLOADER
                 let newName = filePrefix + Date.now() + '.' + ext[ext.length - 1];
 
                 console.log('Ini fungsi edit filename. New file name berhasil dibuat : ', newName);

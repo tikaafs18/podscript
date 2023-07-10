@@ -11,5 +11,4 @@ route.get('/keep', readToken, authController.keepLogin);
 route.patch('/forgotpassword/:id', authController.forgotpassword);
 
 
-
 module.exports = route;

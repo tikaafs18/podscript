@@ -4,15 +4,12 @@ const { transport } = require('../config/nodemailer');
 
 module.exports = {
     register: (req, res) => {
-        console.log("MASUK KE MW REGISTER 1")
         let { username, email, password } = req.body;
-        console.log('ini req.body', req.body)
+
         dbConf.query(`Select * from users where email = ${dbConf.escape(email)} or username = ${dbConf.escape(username)}`,
             (error, results) => {
                 if (error) {
-                    console.log("MASUK KE MW REGISTER 2 : CEK UNAME & EMAIL TAPI ERROR", error)
                     return res.status(500).send('Query middlewear Check error :', error);
-
                 } else if (JSON.stringify(results) == '[]') {
                     dbConf.query(`Insert into users (email,username,password) values (${dbConf.escape(email)},${dbConf.escape(username)},${dbConf.escape(hashPassword(password))})`,
                         (err, ress) => {
@@ -33,8 +30,6 @@ module.exports = {
                                                 if (error) {
                                                     return res.status(500).send(`Query middlewear Register failed, error : ${err}`);
                                                 }
-        console.log("MASUK KE MW REGISTER 3:SEND EMAIL")
-        // <a href='http://localhost:3001/verification/${token}' style="background-color: #B83280; color: white; font-size: x-small; padding: 8px 110px; border: none; border-radius: 50mm; font-weight: bold; text-decoration: none;" >Verify My Email</a>
 
                                                 transport.sendMail({
                                                     from: 'Podscript.',
@@ -159,15 +154,6 @@ module.exports = {
         }
     },
     keepLogin: (req, res) => {
-        // console.log('Ini masuk keeplogin')
-        // console.log('Ini hasil res middleware keepLogin',res)
-        // console.log('Ini hasil req.dataToken middleware keepLogin',req.dataToken)
-        // console.log('Ini hasil req.dataToken.idusers middleware keepLogin',req.dataToken.idusers)
-
-        // let {idusers} = req.dataToken.idusers;
-
-        // console.log('Tipe idusers data token :', typeof req.dataToken.idusers)
-
         dbConf.query(`Select u.idusers, u.email, u.username, u.profilepic, s.status from users u join status s on u.id_status = s.idstatus where idusers = ${dbConf.escape(req.dataToken[0].idusers)}`,
             (err, results) => {
                 if (err) {
@@ -175,15 +161,12 @@ module.exports = {
                 }
 
                 let token = createToken({ ...results[0] });
-                // console.log('Ini results[0] + token ', { ...results[0], token })
-                // console.log('6. Token keeplogin :', token);
 
                 dbConf.query(`Update users set tokenkeeplogin = ${dbConf.escape(token)} where email=${dbConf.escape(results[0].email)}`,
                     (err, ress) => {
                         if (err) {
                             return res.status(500).send(`Query middlewear Register failed, error : ${err}`);
                         }
-                        // console.log('6. Token keeplogin :', token);
 
                         res.status(200).send({
                             ...results[0],
@@ -197,17 +180,13 @@ module.exports = {
         console.log('Ini req.dataToken[0] :', req.dataToken)
 
         try {
-            // if (req.dataToken.body == '{}') {
-                //    1. update status user, yang awalnya unverified menjadi Verify
                 await dbQuery(`UPDATE users set id_status=1 WHERE idusers=${dbConf.escape(req.dataToken[0].idusers)};`);
-                // 2. proses login 
+                
                 let resultsUser = await dbQuery(`Select u.idusers, u.profilepic, u.email, u.username, u.id_status, s.status from users u 
                 JOIN status s on u.id_status = s.idstatus WHERE u.idusers=${dbConf.escape(req.dataToken[0].idusers)};`);
+                
                 if (resultsUser.length > 0) {
-                    // 3. login berhasil, maka kita buat token baru
                     let token = createToken({ ...resultsUser[0] });
-
-                    // console.log('5. Token verification (update status) :', token);
 
                     res.status(200).send(
                         {
@@ -220,33 +199,6 @@ module.exports = {
                             error: ""
                         }
                     )
-            //     }
-            // } else if (req.dataToken.body != '{}') {
-            //     console.log('Ganti password :', req.dataToken.body)
-            //     //    1. update status user, yang awalnya unverified menjadi Verify
-            //     // Update users set password=${dbConf.escape(hashPassword(password))}, id_status=1 where idusers=${dbConf.escape(idusers)}`,
-            //     await dbQuery(`Update users set password=${dbConf.escape(hashPassword(req.dataToken.body))}, id_status=1 where idusers=${dbConf.escape(req.dataToken[0].idusers)}`);
-            //     // 2. proses login 
-            //     let resultsUser = await dbQuery(`Select u.idusers, u.profilepic, u.email, u.username, u.id_status, s.status from users u 
-            //     JOIN status s on u.id_status = s.idstatus WHERE u.idusers=${dbConf.escape(req.dataToken[0].idusers)}`);
-            //     if (resultsUser.length > 0) {
-            //         // 3. login berhasil, maka kita buat token baru
-            //         let token = createToken({ ...resultsUser[0] });
-
-            //         // console.log('5. Token verification (update status) :', token);
-
-            //         res.status(200).send(
-            //             {
-            //                 success: true,
-            //                 messages: "Reset Password Success ✅",
-            //                 dataLogin: {
-            //                     ...resultsUser[0],
-            //                     token
-            //                 },
-            //                 error: ""
-            //             }
-            //         )
-            //     }
             } else {
                 res.status(401).send({
                     success: false,
@@ -274,7 +226,6 @@ module.exports = {
                 if (err) {
                     return res.status(500).send(`Query middlewear Register failed, error : ${err}`);
                 }
-                // <a href='http://localhost:3001/verification/${token}' style="background-color: #B83280; color: white; font-size: x-small; padding: 8px 110px; border: none; border-radius: 50mm; font-weight: bold; text-decoration: none;" >Verify My Email</a>
 
                 transport.sendMail({
                     from: 'Podscript.',
@@ -327,19 +278,13 @@ module.exports = {
                     })
                 } else {
                     let token = createToken({ ...results[0].email }, '1h');
-                    // let token = 'bbb';
-
-
-                    // dbConf.query(`Update users set token = ${dbConf.escape(token)} where email=${dbConf.escape(emailVerif)}`,
 
                     dbConf.query(`Update users set token = ${dbConf.escape(token)} where idusers=${dbConf.escape(results[0].idusers)}`,
                         (err, result) => {
                             if (error) {
                                 return res.status(500).send(`Query middlewear reset password failed, error : ${err}`);
                             }
-                            // <a href='http://localhost:3001/resetpassword/${token}' style="background-color: #B83280; color: white; font-size: x-small; padding: 8px 110px; border: none; border-radius: 50mm; font-weight: bold; text-decoration: none;" >Verify My Email</a>
 
-                            console.log('ini result update token sql', results[0].email)
                             transport.sendMail({
                                 from: 'Podscript.',
                                 to: results[0].email,
@@ -379,37 +324,15 @@ module.exports = {
             })
     },
     resetpassword: async (req, res) => {
-        let { password, idusers } = req.body;
-
-        // dbConf.query(`Update users set password=${dbConf.escape(hashPassword(password))}, id_status=1 where idusers=${dbConf.escape(idusers)}`,
-        // (error,results)=>{
-        //     if(error){
-        //         return res.status(500).send(error);
-        //     } else {
-        //         let token = createToken({ ...results[0] }, '1h');
-
-        //         res.status(200).send({
-        //             success: true,
-        //             message: 'Forgot Password Success',
-        //             ...results[0],
-        //             token
-        //         })
-        //     }
-        // })
-
-        console.log('Ini masuk ke verification')
         try {
             if (req.dataToken[0].idusers) {
-                //    1. update status user, yang awalnya unverified menjadi Verify
                 await dbQuery(`UPDATE users set id_status=1 WHERE idusers=${dbConf.escape(req.dataToken[0].idusers)};`);
-                // 2. proses login 
+
                 let resultsUser = await dbQuery(`Select u.idusers, u.email, u.username, u.id_status, s.status from users u 
                 JOIN status s on u.id_status = s.idstatus WHERE u.idusers=${dbConf.escape(req.dataToken[0].idusers)};`);
+                
                 if (resultsUser.length > 0) {
-                    // 3. login berhasil, maka kita buat token baru
                     let token = createToken({ ...resultsUser[0] });
-
-                    // console.log('5. Token verification (update status) :', token);
 
                     res.status(200).send(
                         {
@@ -424,17 +347,13 @@ module.exports = {
                     )
                 }
             } else if (req.dataToken[0].query != '{}') {
-                //    1. update status user, yang awalnya unverified menjadi Verify
-                // Update users set password=${dbConf.escape(hashPassword(password))}, id_status=1 where idusers=${dbConf.escape(idusers)}`,
                 await dbQuery(`UPDATE users set id_status=1 WHERE idusers=${dbConf.escape(req.dataToken[0].idusers)}`);
-                // 2. proses login 
+
                 let resultsUser = await dbQuery(`Select u.idusers, u.email, u.username, u.id_status, s.status from users u 
                 JOIN status s on u.id_status = s.idstatus WHERE u.idusers=${dbConf.escape(req.dataToken[0].idusers)}`);
+                
                 if (resultsUser.length > 0) {
-                    // 3. login berhasil, maka kita buat token baru
                     let token = createToken({ ...resultsUser[0] });
-
-                    // console.log('5. Token verification (update status) :', token);
 
                     res.status(200).send(
                         {

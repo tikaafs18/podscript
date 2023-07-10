@@ -92,7 +92,7 @@ module.exports = {
     },
     deletepost: (req, res) => {
         let { idpost } = req.query;
-        console.log('Idpost yang dihapus', idpost);
+
         dbConf.query(`Delete from newpost where idpost=${dbConf.escape(idpost)}`,
             (error, results) => {
                 if (error) {
@@ -118,7 +118,7 @@ module.exports = {
     },
     comment: (req, res) => {
         let { idusers, comment, idpost, datecomment } = req.body;
-        console.log(req.body);
+
         dbConf.query(`Insert into newpost_comment (users_id, comment, post_id, datecomment) values (${dbConf.escape(idusers)},${dbConf.escape(comment)},${dbConf.escape(idpost)},${dbConf.escape(datecomment.split("T")[0])})`,
             (error, results) => {
                 if (error) {
@@ -158,7 +158,6 @@ module.exports = {
         let idpost = req.query.idpost;
         let queryend = req.body.queryend;
         dbConf.query(`Select c.comment, c.post_id, c.idcomment, date_format(c.datecomment,"%d/%m/%Y") as datecomment, u.idusers, u.username, u.profilepic from newpost_comment c join users u on u.idusers=c.users_id where c.post_id=${dbConf.escape(idpost)} order by idcomment desc limit ${dbConf.escape(queryend)}`,
-            // dbConf.query(`Select c.comment, c.post_id, c.idcomment, u.idusers, u.username, u.profilepic from newpost_comment c join users u on u.idusers=c.users_id where c.post_id=${dbConf.escape(idpost)} limit 0,${dbConf.escape(queryend)}`,
             (error, results) => {
                 if (error) {
                     return res.status(500).send(error);
@@ -181,7 +180,7 @@ module.exports = {
     },
     getTotalLike: (req, res) => {
         let idpost = req.query.idpost;
-        console.log(idpost)
+        
         dbConf.query(`Select count(*) as total_like from newpost_like where post_id=${dbConf.escape(idpost)} group by post_id`,
             (error, results) => {
                 if (error) {
