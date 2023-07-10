@@ -4,33 +4,21 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    MenuItem,
-    MenuDivider,
-    useToast, Modal, ModalOverlay,
+    MenuItem, Modal, ModalOverlay,
     ModalContent, ModalHeader, ModalFooter,
-    ModalBody, ModalCloseButton, FormControl,
-    Image, FormLabel, Divider,
-    AlertDialog,
-    AlertDialogBody,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogContent,
-    AlertDialogOverlay,
-    useDisclosure, Textarea
+    ModalBody, 
+    Image, Textarea
 } from '@chakra-ui/react'
-import { AiOutlineHeart, AiOutlineSmile, AiFillHeart, AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineSmile, AiFillHeart } from "react-icons/ai";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { FaRegComment } from "react-icons/fa";
 import { IoPaperPlaneOutline } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { API_URL } from "../helper";
 import Axios from "axios";
 import { useParams } from "react-router-dom";
-import { loginAction } from "../Actions/userAction";
-import { newpostAction } from "../Actions/userAction";
 
-const PostPage = (props) => {
-
+const PostPage = () => {
     const [data, setData] = React.useState([]);
     const [allComment, setAllComment] = React.useState([]);
     const [queryend, setQueryend] = React.useState(5);
@@ -106,18 +94,12 @@ const PostPage = (props) => {
                 datecomment: today
             })
                 .then((res) => {
-                    // console.log(res.data);
                     setAllComment(res.data);
-                    console.log(document.getElementById("comment").value)
-
-                    // getComment();
                     document.getElementById("comment").value = null;
                     likedByme();
                     getTotalLike();
                 })
                 .catch((error) => {
-                    console.log(' handlecomment error')
-
                     console.log(error)
                 })
         } else {
@@ -150,7 +132,6 @@ const PostPage = (props) => {
                 idpost
             })
             .then((res) => {
-                console.log(res.data);
                 if (res.data.success == 'true') {
                     likedByme();
                     getTotalLike();
@@ -323,14 +304,7 @@ const PostPage = (props) => {
                                     <Text fontSize='lg' className="mt-2 text-muted fw-bold" >View all comments</Text>
                                     <div className="d-flex align-items-center mt-3">
                                         <Icon as={AiOutlineSmile} w={8} h={8} />
-                                        {/* {
-                                            spinner ?
-                                                <div className="m-auto">
-                                                    <Spinner defaultValue={comment} emptyColor='transparent' />
-                                                </div>
-                                                : */}
-                                                <Input id='comment' size='lg' variant='unstyled' placeholder='Add a comment...' type='text' className="ms-2 ps-2" />
-                                        {/* } */}
+                                            <Input id='comment' size='lg' variant='unstyled' placeholder='Add a comment...' type='text' className="ms-2 ps-2" />
                                         <Button size='lg' style={{ color: '#D53F8C' }} className="fw-bold" variant='link' >Post</Button>
                                     </div>
                                 </div>
@@ -342,7 +316,6 @@ const PostPage = (props) => {
         </div>
 
         <Modal id='modalCaption' isOpen={editCaption} onClose={() => setEditCaption(!editCaption)} size='lg' isCentered>
-            {/* <Modal id='mymodal' isOpen={detailPage} onClose={() => setDetailPage(!detailPage)} size='xl' isCentered> */}
             <ModalOverlay />
             <ModalContent className="p-3">
                 <ModalHeader className="d-flex justify-content-between align-items-center border-bottom mb-3">

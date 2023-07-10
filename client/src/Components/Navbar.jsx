@@ -24,24 +24,19 @@ import { logoutAction } from "../Actions/userAction";
 const Navbar = (props) => {
     const navigate = useNavigate();
     const { pathname } = window.location;
-    const [toggle, setToggle] = React.useState(false); // untuk membuka/menutup modal
+    const [toggle, setToggle] = React.useState(false); 
     const [image, setImage] = React.useState("");
     const [caption, setCaption] = React.useState("");
     const [post, setPost] = React.useState("");
-    const [navbarToggler, setNavbarToggler] = React.useState(false); // untuk membuka/menutup modal
+    const [navbarToggler, setNavbarToggler] = React.useState(false);
     const [coba, setCoba] = React.useState(true);
     const [imagePreview, setImagePreview] = React.useState('');
     const [cobaResend, setCobaResend] = React.useState(true);
-    const [data, setData] = React.useState([]);
-    const [profpic, setProfpic] = React.useState('');
-console.log('ini image', image)
 
     const toast = useToast();
     const dispatch = useDispatch();
 
-    //Untuk navbar berubah depends on sudah login atau belum (currently tidak digunakan)
     const global = useSelector((state) => {
-        // console.log(state.userReducer.email)
         return {
             idusers: state.userReducer.idusers,
             username: state.userReducer.username,
@@ -191,9 +186,7 @@ console.log('ini image', image)
 
                             <Menu>
                                 <MenuButton className="navbar-toggler bg-transparent">
-                                    {/* <Button className="navbar-toggler bg-transparent"> */}
                                     <span className="navbar-toggler-icon"></span>
-                                    {/* </Button> */}
                                 </MenuButton>
                                 <MenuList textColor='#151033'>
                                     <div>

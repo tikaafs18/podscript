@@ -7,8 +7,6 @@ const Footer = () => {
         style={{
             borderTopLeftRadius: "25px",
             borderTopRightRadius: "25px",
-            // background:'#151033', 
-            // color:'white'
         }}
     >
         <div className='container d-none d-md-flex flex-wrap justify-content-between align-items-top'>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Input, InputGroup, InputRightElement, Button, Icon, useToast, Spinner, FormControl, FormLabel } from "@chakra-ui/react";
+import { Text, Input, InputGroup, InputRightElement, Button, Icon, useToast, Spinner, FormControl } from "@chakra-ui/react";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../helper";
@@ -25,8 +25,6 @@ const ResetPasswordPage = () => {
     const upperCase = /^(?=.*[A-Z]).*$/;
     const number = /^(?=.*[0-9]).*$/;
 
-    let email = localStorage.getItem('emailLog');
-
     const onVisibility = () => {
         if (visible === "password") {
             setVisible("text")
@@ -43,19 +41,16 @@ const ResetPasswordPage = () => {
         }
     }
 
-    console.log(password)
-
     const onReset = async () => {
         setCoba(!coba);
         try {
             let res = await Axios.patch(`${API_URL}/auth/verified`, {password}, {
-                // body: {tes},
                 headers: {
                     'Authorization': `Bearer ${params.token}`
                 }
             })
 
-            if (res.data.success) { // Jika success maka auto login
+            if (res.data.success) {
                 console.log('Ini token handleverified (userlog) :', res.data.dataLogin.token)
                 toast({
                     title: 'Reset password success',
@@ -65,15 +60,13 @@ const ResetPasswordPage = () => {
                     isClosable: true
                 })
                 setSuccessResult(res.data.success);
-                localStorage.setItem('userLog', res.data.dataLogin.token); // token disimpan ke localStorage
-                delete res.data.dataLogin.token; // properti token dihapus
-                dispatch(loginAction({ ...res.data.dataLogin, login: "true" })); // data user disimpan ke reducer
+                localStorage.setItem('userLog', res.data.dataLogin.token);
+                delete res.data.dataLogin.token;
+                dispatch(loginAction({ ...res.data.dataLogin, login: "true" })); 
                 {setTimeout(() => { navigate('/homepage', { replace: true }) }, 5000)}
             } else {
-                // setSuccessResult(res.data.success);
                 setCoba(coba);
             }
-
         } catch (error) {
             setCoba(coba);
         }
@@ -182,7 +175,6 @@ const ResetPasswordPage = () => {
                         }
                     </div>
             }
-
         </div>
     </div>
 }

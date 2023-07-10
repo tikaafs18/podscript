@@ -1,14 +1,13 @@
-import { Spinner, InputGroup, InputRightElement, Text, Input, FormControl, FormErrorMessage, FormHelperText, FormLabel, Button, useToast, Icon } from "@chakra-ui/react";
+import { Spinner, InputGroup, InputRightElement, Text, Input, FormControl, FormLabel, Button, useToast, Icon } from "@chakra-ui/react";
 import React from "react";
 import Axios from "axios";
 import { API_URL } from "../helper";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
-import { SearchIcon } from "@chakra-ui/icons"
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerAction } from "../Actions/userAction";
 
-const RegisterPage = (props) => {
+const RegisterPage = () => {
     const [email, setEmail] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -16,10 +15,7 @@ const RegisterPage = (props) => {
     const [visible, setVisible] = React.useState('password');
     const [visibleC, setVisibleC] = React.useState('password');
     const [coba, setCoba] = React.useState(true);
-
-    const navigate = useNavigate();
     const toast = useToast();
-
     const dispatch = useDispatch();
 
     const onRegister = () => {
@@ -41,7 +37,6 @@ const RegisterPage = (props) => {
                                 isClosable: true
                             });
                             dispatch(registerAction(res.data));
-                            // navigate('/sendemail', { replace: true });
                         } else {
                             setCoba(coba);
                             toast({
@@ -74,8 +69,6 @@ const RegisterPage = (props) => {
             setVisibleC("password")
         }
     }
-
-    let a = 2;
 
     const symbol = /^(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).*$/;
     const upperCase = /^(?=.*[A-Z]).*$/;
@@ -152,8 +145,6 @@ const RegisterPage = (props) => {
                                             <span className="ms-1" style={upperCase.test(password) && number.test(password) && symbol.test(password) ? { color: 'green', fontSize: 'small' } : { color: '#FF0000', fontSize: 'small' }} >Contain symbol, uppercase, and number</span>
                                         </div>
                                     </div>
-
-
                                 }
 
 
@@ -183,8 +174,6 @@ const RegisterPage = (props) => {
                                     }
                                 </div>
                             </FormControl>
-
-
                         </div>
                     </div>
                 </div>

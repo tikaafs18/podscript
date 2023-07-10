@@ -1,5 +1,5 @@
 import React from "react";
-import { Spinner, InputGroup, InputRightElement, Text, Input, FormControl, FormErrorMessage, FormHelperText, FormLabel, Button, useToast } from "@chakra-ui/react";
+import { Spinner, InputGroup, InputRightElement, Text, Input, FormControl, FormLabel, Button, useToast } from "@chakra-ui/react";
 import Axios from "axios";
 import { API_URL } from "../helper";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../Actions/userAction";
 
-const LoginPage = (props) => {
+const LoginPage = () => {
     const [email, setEmail] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -17,12 +17,7 @@ const LoginPage = (props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const toast = useToast();
-    const emailError = email == '';
-    const usernameError = username == '';
-    const passwordError = password == '';
-
-    // console.log(isError)
-
+ 
     const onLogin = () => {
         setCoba(!coba);
         if (password && email || username) {
@@ -43,7 +38,6 @@ const LoginPage = (props) => {
                         });
                         localStorage.setItem('userLog', res.data.token);
                         localStorage.setItem('profileLog', 'post');
-                        // console.log('2. Ini token login, cek res.data.token :', res.data.token)
                         localStorage.setItem('emailLog', email);
                         delete res.data.token;
                         dispatch(loginAction({ ...res.data.isiLogin, login: "true" }));
@@ -61,7 +55,6 @@ const LoginPage = (props) => {
                     console.log(`Axios get (login) failed : ${err}`)
                 })
             }, 3000);
-
         }
     }
 
@@ -128,10 +121,7 @@ const LoginPage = (props) => {
                             </FormControl>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
     </div>

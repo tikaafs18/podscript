@@ -13,12 +13,10 @@ const SendResetPasswordPage = (props) => {
         let decide = e.target.value;
 
         if (decide.includes('@' && '.com')) {
-            // console.log('Ini email', decide);
             setEmail(decide);
             setUsername('');
         } else if (!decide.includes('@' && '.com')) {
             if (!decide.includes('@') && '.co') {
-                // console.log('Ini username', decide);
                 setUsername(decide);
                 setEmail('');
             }
@@ -75,8 +73,6 @@ const SendResetPasswordPage = (props) => {
                 coba ? <Button className="mx-3 mb-5" size='sm' colorScheme="pink" variant="solid" onClick={sendLink}>Send Reset Password Link</Button>
                     : <Button className="mx-3 mb-5" size='sm' colorScheme="pink" variant="solid" disabled><Spinner size='sm' /></Button>
             }
-
-            {/* <Button className="mx-3 mb-5" size='md' colorScheme="pink" onClick={sendLink}>Send Reset Password Link</Button> */}
         </div>
     </div>
 }

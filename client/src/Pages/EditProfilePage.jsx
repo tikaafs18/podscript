@@ -1,14 +1,14 @@
-import { FormErrorMessage, ModalFooter, Spinner, Image, ImagePreview, ModalBody, FormControl, FormLabel, Input, Text, Wrap, WrapItem, Avatar, Button, Modal, ModalOverlay, ModalContent, ModalHeader, useToast } from "@chakra-ui/react";
+import { FormErrorMessage, ModalFooter, Spinner, Image, ModalBody, FormControl, FormLabel, Input, Text, Wrap, WrapItem, Avatar, Button, Modal, ModalOverlay, ModalContent, ModalHeader, useToast } from "@chakra-ui/react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../helper";
 import Axios from "axios";
 import { editProfileAction } from "../Actions/userAction";
 
-const EditProfilePage = (props) => {
+const EditProfilePage = () => {
     const [fullname, setFullname] = React.useState('');
     const [bio, setBio] = React.useState('');
-    const [toggle, setToggle] = React.useState(false); // untuk membuka/menutup modal
+    const [toggle, setToggle] = React.useState(false);
     const [profpic, setProfpic] = React.useState("");
     const [imagePreview, setImagePreview] = React.useState('');
     const [coba, setCoba] = React.useState(true);
@@ -119,10 +119,8 @@ const EditProfilePage = (props) => {
     }
 
     const onImage = (e) => {
-        // if (global.profilepic) {
-            setProfpic(e.target.files[0])
-            setImagePreview(URL.createObjectURL(e.target.files[0]));
-        // }
+        setProfpic(e.target.files[0])
+        setImagePreview(URL.createObjectURL(e.target.files[0]));
     };
 
 

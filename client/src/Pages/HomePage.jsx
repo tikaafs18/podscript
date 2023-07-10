@@ -4,12 +4,10 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    MenuItem,
-    MenuDivider,
-    useToast, Modal, ModalOverlay,
+    MenuItem, Modal, ModalOverlay,
     ModalContent, ModalHeader, ModalFooter,
-    ModalBody, ModalCloseButton, FormControl,
-    Image, FormLabel, Divider,
+    ModalBody,
+    Image,
     AlertDialog,
     AlertDialogBody,
     AlertDialogFooter,
@@ -18,25 +16,20 @@ import {
     AlertDialogOverlay,
     useDisclosure, Textarea, Spinner
 } from '@chakra-ui/react'
-import { AiOutlineHeart, AiOutlineSmile, AiFillHeart, AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineHeart, AiOutlineSmile, AiFillHeart } from "react-icons/ai";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { FaRegComment } from "react-icons/fa";
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { API_URL } from "../helper";
 import Axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import { loginAction } from "../Actions/userAction";
-import { newpostAction, uploadedAction } from "../Actions/newpostAction";
-import { commentAction } from "../Actions/newpostAction";
+import { useNavigate } from "react-router-dom";
+import { newpostAction } from "../Actions/newpostAction";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { type } from "@testing-library/user-event/dist/type";
 
 
-const HomePage = (props) => {
-
+const HomePage = () => {
     const [data, setData] = React.useState([]);
-    // const [defaultID, setDefaultID] = React.useState(null);
     const [newCaption, setNewCaption] = React.useState('');
     const [dimage, setDimage] = React.useState('');
     const [dusername, setDusername] = React.useState('');
@@ -54,9 +47,6 @@ const HomePage = (props) => {
     const [dataLike, setDataLike] = React.useState([]);
     const [melike, setMelike] = React.useState([]);
     const [spinner, setSpinner] = React.useState(false);
-
-    console.log(data)
-
 
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
@@ -101,13 +91,11 @@ const HomePage = (props) => {
                 idpost
             })
             .then((res) => {
-                // console.log(res.data);
                 if (res.data.success == 'true') {
                     setDataLike(res.data.dataLike);
                     getLike();
                     likedByme();
                 } else {
-                    // console.log('udah dilike', res.data.success);
                     getLike();
                     likedByme();
                 }

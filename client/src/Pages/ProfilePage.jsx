@@ -12,7 +12,6 @@ const ProfilePage = () => {
 
     const [cobaResend, setCobaResend] = React.useState(true);
     const [data, setData] = React.useState([]);
-    const [query, setQuery] = React.useState(3);
     const [tab, setTab] = React.useState(`${tabLog}`);
     const [dataLiked, setDataLiked] = React.useState([]);
     const [colorGrid, setColorGrid] = React.useState('#D53F8C');
@@ -90,8 +89,6 @@ const ProfilePage = () => {
         getLiked()
     }, [])
 
-    console.log('Ini dataLiked', dataLiked)
-
     const printPost = () => {
         return data.map((val, idx) => {
             return <div className="col-12 col-md-6 col-lg-4 my-4" key={val.idpost}>
@@ -148,15 +145,10 @@ const ProfilePage = () => {
 
                     <div className="row py-5">
                         <div className="col-12 col-lg-8">
-                            {/* {
-                        global.status == "UNVERIFIED" ? */}
                             <div className="py-5 my-5">
                                 <Text fontSize='3xl' className="fw-bold">Account Not Verified</Text>
                                 <Text fontSize='2xl' className="pt-1">Please verify your email to activate your account.</Text>
                                 <Text fontSize='2xl' className="pb-3">Go to your profile to re-send a verification email.</Text>
-                                {/* </div> :
-                            printPost()
-                    } */}
                                 {
                                     cobaResend ? <Button colorScheme="pink" variant="solid" onClick={handleResendLink}>Resend verification link</Button>
                                         : <Button colorScheme="pink" variant="solid" disabled><Spinner size='sm' /></Button>

@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
@@ -21,15 +21,9 @@ import SendResetPasswordPage from './Pages/SendResetPW';
 import ResetPasswordPage from './Pages/ResetPW';
 
 function App() {
-
-  let token = localStorage.getItem('userLog');
   const [loading, setLoading] = React.useState(true);
   const dispatch = useDispatch();
 
-  let emailVerif = localStorage.getItem('emailLog');
-  let params = useParams();
-
-  // console.log('Ini token di app.js :', token)
 
   const global = useSelector((state) => {
     return {
@@ -41,20 +35,7 @@ function App() {
     }
   })
 
-
-  console.log('Ini global login :', global.login)
-  let homepageLog = localStorage.getItem('homepageLog');
-  // console.log('Ini homepagelog', homepageLog)
-  let userLog = localStorage.getItem('userLog');
-  // console.log('Ini token (userLog) keeplogin :', userLog)
-
-  // console.log("Cek boolean global.idusers before keep login", Boolean(global.idusers));
-
   const keepLogin = () => {
-    // console.log("Keep login terus berjalan, meski tanpa iduser dari Local Storage (userLog)");
-    // console.log("Cek boolean global.idusers sudah masuk keep login, tapi belum userLog", Boolean(global.idusers));
-
-    let homepageLog = localStorage.getItem('homepageLog');
     let userLog = localStorage.getItem('userLog');
     if (userLog) {
       Axios.get(API_URL + '/auth/keep', {
@@ -65,12 +46,10 @@ function App() {
         .then((res) => {
           localStorage.setItem('emailLog', global.email);
           localStorage.setItem('userLog', res.data.token);
-          // console.log('5. Ini token keeplogin, cek res.data :', res.data)
           delete res.data.token;
           setLoading(false);
           dispatch(loginAction({ ...res.data, login: "true" }));
         }).catch((error) => {
-          console.log('Ga jelas', error);
           setLoading(false);
         })
     } else {
@@ -97,7 +76,6 @@ function App() {
       }
 
       {
-        // global.status == "UNVERIFIED" && global.login == 'false' ?
         global.login == 'false' ?
           <>
             <Route path='/' element={<LandingPage />} />
@@ -111,7 +89,6 @@ function App() {
       {
         global.idusers && global.status ?
           <>
-            {/* <Text fontSize='3xl' className="fw-bold mt-5">Edit Profile</Text> */}
             <Route path='/' element={<HomePage />} />
             <Route path='/homepage' element={<HomePage />} />
             <Route path='/profile' element={<ProfilePage />} />
@@ -122,7 +99,6 @@ function App() {
       }
 
       {
-        // emailVerif && global.status == "UNVERIFIED" ?
         global.status ?
           <>
             <Route path='/verification/:token' element={<VerificationPage />} />
