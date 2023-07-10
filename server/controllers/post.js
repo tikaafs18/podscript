@@ -111,8 +111,7 @@ module.exports = {
                 if (error) {
                     res.status(500).send(`Middleware query editcaption gagal :`, error);
                 }
-
-                console.log(results);
+                
                 res.status(200).send(results);
             })
     },

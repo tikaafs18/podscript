@@ -6,7 +6,6 @@ module.exports = {
         dbConf.query(`Select idusers, fullname, username, email, profilepic, bio from users 
         where idusers=${parseInt(req.query.idusers)}`,
             (err, results) => {
-                console.log(results[0])
                 if (err) {
                     return res.status(500).send(`Middlewear getProfile failed, error : ${err}`)
                 }
@@ -20,8 +19,6 @@ module.exports = {
             dbConf.query(profilepic ? `Update users set fullname=${dbConf.escape(fullname)}, username=${dbConf.escape(username)}, bio=${dbConf.escape(bio)}, profilepic=${dbConf.escape(profilepic)} where idusers=${dbConf.escape(idusers)}`
                 : `Update users set fullname=${dbConf.escape(fullname)}, username=${dbConf.escape(username)}, bio=${dbConf.escape(bio)} where idusers=${dbConf.escape(idusers)}`,
                 (error, results) => {
-                    console.log(results)
-                    console.log(results.message)
 
                     if (error) {
                         return res.status(500).send(`Middlewear editProfile failed, error : ${error}`)

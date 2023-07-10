@@ -136,7 +136,6 @@ const PostPage = () => {
                     likedByme();
                     getTotalLike();
                 } else {
-                    console.log('Ini res.data.success false', res.data)
                     likedByme();
                     getTotalLike();
                 }

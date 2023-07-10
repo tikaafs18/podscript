@@ -27,7 +27,6 @@ module.exports = {
                         })
 
                     } else if (JSON.stringify(results) == '[]') {
-                        console.log('Ini keeplogin')
                         dbConf.query(`Select * from users where tokenkeeplogin=${dbConf.escape(req.token)}`,
                             (error, reslt) => {
                                 if (error) {

@@ -176,9 +176,6 @@ module.exports = {
             })
     },
     verification: async (req, res) => {
-        console.log('Ini masuk ke verification')
-        console.log('Ini req.dataToken[0] :', req.dataToken)
-
         try {
                 await dbQuery(`UPDATE users set id_status=1 WHERE idusers=${dbConf.escape(req.dataToken[0].idusers)};`);
                 
@@ -265,7 +262,6 @@ module.exports = {
     },
     forgotpassword: (req, res) => {
         let { email, username } = req.query;
-        console.log('Ini req.query', req.query);
 
         dbConf.query(`Select * from users where ${email ? `email = ${dbConf.escape(email)}` : `username = ${dbConf.escape(username)}`} `,
             (error, results) => {

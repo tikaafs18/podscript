@@ -51,7 +51,6 @@ const ResetPasswordPage = () => {
             })
 
             if (res.data.success) {
-                console.log('Ini token handleverified (userlog) :', res.data.dataLogin.token)
                 toast({
                     title: 'Reset password success',
                     description: 'Redirecting to your account...',
