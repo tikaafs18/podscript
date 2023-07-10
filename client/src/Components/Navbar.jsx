@@ -3,12 +3,12 @@ import {
     Avatar, Modal, ModalOverlay,
     ModalContent, ModalHeader, ModalFooter,
     ModalBody, ModalCloseButton, FormControl,
-    Image, Input, FormLabel, Select, Menu,
+    Image, Input, FormLabel, Menu,
     MenuButton,
     MenuList,
     MenuItem,
     MenuDivider,
-    useToast, AvatarBadge
+    useToast
 } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,6 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { API_URL } from "../helper";
 import Axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { userReducer } from "../Reducers/userReducer";
 import { newpostAction, uploadedAction } from "../Actions/newpostAction";
 import { logoutAction } from "../Actions/userAction";
 
@@ -146,7 +145,7 @@ const Navbar = (props) => {
                                 </MenuList>
                             </Menu>
                         </div>
-                        <Modal isOpen={toggle} onClose={() => setToggle(!toggle)} size='xl'>
+                        <Modal isOpen={toggle} onClose={() => setToggle(!toggle)} size='sm'>
                             <ModalOverlay />
                             <ModalContent className="p-3">
                                 <ModalHeader>Create new post</ModalHeader>
@@ -156,8 +155,6 @@ const Navbar = (props) => {
                                         <Image className='shadow-sm' boxSize='100% 50%' margin='auto' objectFit='cover' src={imagePreview} fallbackSrc='https://media.istockphoto.com/vectors/image-preview-icon-picture-placeholder-for-website-or-uiux-design-vector-id1222357475?k=20&m=1222357475&s=612x612&w=0&h=jPhUdbj_7nWHUp0dsKRf4DMGaHiC16kg_FSjRRGoZEI=' alt='add-product' />
                                         <FormLabel className="mt-4 fw-bold">New Post</FormLabel>
                                         <Input type='file' onChange={onImage} placeholder='Insert image here' />
-
-                                        {/* <Input type='file' onChange={(e) => setImage(e.target.files[0])} placeholder='Insert image here' /> */}
                                         <FormLabel className="mt-4 fw-bold">Caption</FormLabel>
                                         <Input type='text' onChange={(e) => setCaption(e.target.value)} placeholder='Insert caption here' />
                                     </FormControl>

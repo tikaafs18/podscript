@@ -346,8 +346,9 @@ const HomePage = () => {
 
     return <div style={{ color: '#151033', minHeight:'75vh' }}>
         <div className="container">
-            <div className="row py-3 py-lg-5">
-                <div className="col-12 col-lg-9">
+            <div className="row py-3 py-lg-4 justify-content-center">
+            <div className="col-lg-2"></div>
+                <div className="col-12 col-lg-5">
                     {
                         global.status == "VERIFIED" ?
                             printPost()
@@ -359,8 +360,8 @@ const HomePage = () => {
                             </div>
                     }
                 </div>
-                <div className="col-12 d-none col-lg-3 d-lg-flex ps-5">
-                    <div className="ps-3">
+                <div className="col-12 d-none col-lg-4 d-lg-flex justify-content-end">
+                    <div>
                         <div>
                             <Wrap>
                                 <WrapItem className="d-flex align-items-center">
