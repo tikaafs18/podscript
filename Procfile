@@ -1,2 +1,2 @@
-web: cd client && npm install && npm start
-web: cd server && npm install && npm start
+web: node client/package.json
+api: node server/package.json
