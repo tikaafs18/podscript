@@ -1,2 +1,1 @@
-web:node client/package.json
-api:node server/package.json
+api:node server/index.js
