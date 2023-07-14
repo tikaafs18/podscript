@@ -1,2 +1,2 @@
-web:node client/src/index.html
+web:node client/public/index.html
 api:node server/index.js
