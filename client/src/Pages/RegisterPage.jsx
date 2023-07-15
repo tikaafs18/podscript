@@ -3,7 +3,6 @@ import React from "react";
 import Axios from "axios";
 import { API_URL } from "../helper";
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { registerAction } from "../Actions/userAction";
 
@@ -12,61 +11,60 @@ const RegisterPage = () => {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
-    const [visible, setVisible] = React.useState('password');
-    const [visibleC, setVisibleC] = React.useState('password');
-    const [coba, setCoba] = React.useState(true);
+    const [visiblePassword, setVisiblePassword] = React.useState('password');
+    const [visibleConfirmPassword, setVisibleConfirmPassword] = React.useState('password');
+    const [spinner, setSpinner] = React.useState(false);
     const toast = useToast();
     const dispatch = useDispatch();
 
     const onRegister = () => {
         if (email && username && confirmPassword == password) {
-            setCoba(!coba);
+            setSpinner(!spinner);
             setTimeout(() => {
                 Axios.post(API_URL + '/auth/register', {
                     email,
                     username,
                     password
+                }).then((res) => {
+                    if (res.data.success) {
+                        toast({
+                            title: 'Account Registration Success',
+                            description: 'Please check your mailbox for account verification.',
+                            status: 'success',
+                            duration: 3000,
+                            isClosable: true
+                        });
+                        dispatch(registerAction(res.data));
+                    } else {
+                        setSpinner(spinner);
+                        toast({
+                            title: 'Account Registration Failed',
+                            description: res.data.message,
+                            status: 'error',
+                            duration: 3000,
+                            isClosable: true
+                        });
+                    }
+                }).catch((err) => {
+                    console.log(`Axios post (register) failed : ${err}`)
                 })
-                    .then((res) => {
-                        if (res.data.success) {
-                            toast({
-                                title: 'Account Registration Success',
-                                description: 'Please check your mailbox for account verification.',
-                                status: 'success',
-                                duration: 3000,
-                                isClosable: true
-                            });
-                            dispatch(registerAction(res.data));
-                        } else {
-                            setCoba(coba);
-                            toast({
-                                title: 'Account Registration Failed',
-                                description: res.data.message,
-                                status: 'error',
-                                duration: 3000,
-                                isClosable: true
-                            });
-                        }
-                    }).catch((err) => {
-                        console.log(`Axios post (register) failed : ${err}`)
-                    })
             }, 3000)
         }
     }
 
-    const onVisibility = () => {
-        if (visible === "password") {
-            setVisible("text")
-        } else if (visible === "text") {
-            setVisible("password")
+    const onVisiblePassword = () => {
+        if (visiblePassword === "password") {
+            setVisiblePassword("text")
+        } else if (visiblePassword === "text") {
+            setVisiblePassword("password")
         }
     }
 
-    const onVisibilityCPW = () => {
-        if (visibleC === "password") {
-            setVisibleC("text")
-        } else if (visibleC === "text") {
-            setVisibleC("password")
+    const onVisibleConfirmPassword = () => {
+        if (visibleConfirmPassword === "password") {
+            setVisibleConfirmPassword("text")
+        } else if (visibleConfirmPassword === "text") {
+            setVisibleConfirmPassword("password")
         }
     }
 
@@ -111,12 +109,12 @@ const RegisterPage = () => {
                                 <FormLabel className="mt-4">Password</FormLabel>
                                 <InputGroup>
                                     <InputRightElement
-                                        onClick={onVisibility}
-                                        children={visible === "password" ?
+                                        onClick={onVisiblePassword}
+                                        children={visiblePassword === "password" ?
                                             <AiOutlineEye size={26} />
                                             : <AiOutlineEyeInvisible size={26} />}
                                     />
-                                    <Input type={visible} placeholder='Enter your password' onChange={(e) => setPassword(e.target.value)} />
+                                    <Input type={visiblePassword} placeholder='Enter your password' onChange={(e) => setPassword(e.target.value)} />
                                 </InputGroup>
                                 {
 
@@ -155,12 +153,12 @@ const RegisterPage = () => {
                                 <FormLabel className="mt-4">Confirm Password</FormLabel>
                                 <InputGroup>
                                     <InputRightElement
-                                        onClick={onVisibilityCPW}
-                                        children={visibleC === "password" ?
+                                        onClick={onVisibleConfirmPassword}
+                                        children={visibleConfirmPassword === "password" ?
                                             <AiOutlineEye size={26} />
                                             : <AiOutlineEyeInvisible size={26} />}
                                     />
-                                    <Input type={visibleC} placeholder='Confirm your password' onChange={(e) => setConfirmPassword(e.target.value)} />
+                                    <Input type={visibleConfirmPassword} placeholder='Confirm your password' onChange={(e) => setConfirmPassword(e.target.value)} />
                                 </InputGroup>
 
                                 <div className={confirmPassword ? "d-block mt-1" : "d-none"}>
@@ -169,8 +167,8 @@ const RegisterPage = () => {
 
                                 <div className="d-flex justify-content-end mt-3">
                                     {
-                                        coba ? <Button colorScheme="pink" variant="solid" onClick={onRegister}>Register</Button>
-                                            : <Button colorScheme="pink" variant="solid" disabled><Spinner size='sm' /></Button>
+                                        spinner ? <Button colorScheme="pink" variant="solid" disabled><Spinner size='sm' /></Button>
+                                        : <Button colorScheme="pink" variant="solid" onClick={onRegister}>Register</Button>
                                     }
                                 </div>
                             </FormControl>
