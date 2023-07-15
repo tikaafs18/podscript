@@ -38,7 +38,7 @@ const RegisterPage = () => {
                             });
                             dispatch(registerAction(res.data));
                         } else {
-                            setCoba(coba);
+                            setCoba(!coba);
                             toast({
                                 title: 'Account Registration Failed',
                                 description: res.data.message,
